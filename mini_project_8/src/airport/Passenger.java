@@ -71,12 +71,12 @@ public class Passenger {
             if (this.flights.get(this.flights.size() - 1).getDestination() != flight.getOrigin()) {
                 throw new DestinationOriginInterference();
             }
-                if (flight.getPassengers().size() + 1 > flight.getCapacity()) {
-                    throw new IndexOutOfBoundsException("flight capacity is full");
-                }
 
         }
-            this.balance-= flight.getCost();
+        if (flight.getPassengers().size() + 1 >= flight.getCapacity()) {
+            throw new IndexOutOfBoundsException("flight capacity is full");
+        }
+        this.balance-= flight.getCost();
             this.flights.add(flight);
             flight.getPassengers().add(this);
 

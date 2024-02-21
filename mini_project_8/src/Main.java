@@ -5,11 +5,14 @@ import exceptions.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Main {
-    public static void main(String[] args)  {
+    public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -19,13 +22,13 @@ public class Main {
         Flight f3 = null;
         Flight f22 = null;
         try {
-             f2 = new Flight(date, LocalTime.parse("21:00"), "isfahan", "mashhad",
+            f2 = new Flight(date, LocalTime.parse("20:00"), "isfahan", "mashhad",
                     900d, 110, 1570.5, 50);
             f22 = new Flight(date, LocalTime.parse("21:54"), "tehran", "ahwaz",
                     900d, 110, 1570.5, 50);
-             f1 = new Flight(date, LocalTime.parse("19:00"), "isfahan", "tehran",
-                    320.5, 55, 780.3, 2);
-             f3 = new Flight(date, LocalTime.parse("23:00"), "isfahan", "tehran",
+            f1 = new Flight(date, LocalTime.parse("19:00"), "isfahan", "tehran",
+                    320.5, 55, 780.3, 1);
+            f3 = new Flight(date, LocalTime.parse("23:00"), "isfahan", "tehran",
                     320.5, 55, 780.3, 87);
         } catch (ArithmeticException e) {
             System.out.println(e.getMessage());
@@ -39,23 +42,23 @@ public class Main {
             try {
                 System.out.println("enter your name");
                 String name1 = sc.next();
-                System.out.println("enter your name");
-                String name2 = sc.next();
+//                System.out.println("enter your name");
+//                String name2 = sc.next();
                 System.out.println("enter your phone");
                 String phone1 = sc.next();
-                System.out.println("enter your phone");
-                String phone2 = sc.next();
+//                System.out.println("enter your phone");
+//                String phone2 = sc.next();
                 System.out.println("enter your email");
                 String email1 = sc.next();
-                System.out.println("enter your email");
-                String email2 = sc.next();
+//                System.out.println("enter your email");
+//                String email2 = sc.next();
                 System.out.println("enter your balance");
                 double balance1 = sc.nextDouble();
-                System.out.println("enter your balance");
-                double balance2 = sc.nextDouble();
-
-                  p1 = new Passenger(name1, phone1, email1, balance1);
-                  p2 = new Passenger(name2, phone2, email2, balance2);
+//                System.out.println("enter your balance");
+//                double balance2 = sc.nextDouble();
+                sc.nextLine();
+                p1 = new Passenger(name1, phone1, email1, balance1);
+                p2 = new Passenger("ref","989301112233" , "erfan123@gmail.com", 2999999d);
 //                p3 = new Passenger("ali", "9301112233", "abc@gmail.com", 2000.5);
 //                p4 = new Passenger("zahra", "989301112233", "abcgl.com", 3000d);
 
@@ -72,7 +75,7 @@ public class Main {
                         System.out.println(((InvalidBalance) ex).getMessage());
                     }
                 } else {
-                    System.out.println(ex.getMessage());
+                    System.out.println(((InputMismatchException) ex).toString());
                 }
                 finish = false;
             }
@@ -81,11 +84,8 @@ public class Main {
 
         try {
             p1.reserveFlight(f1);
-            p1.reserveFlight(f22);
-            p2.reserveFlight(f3);
-            p2.reserveFlight(f2);
-        }
-        catch ( FlightReserveUnsuccessful | IndexOutOfBoundsException ex) {
+            p2.reserveFlight(f1);
+        } catch (FlightReserveUnsuccessful | IndexOutOfBoundsException ex) {
 
 
             if (ex instanceof FlightReserveUnsuccessful) {
@@ -98,15 +98,12 @@ public class Main {
                 if (ex instanceof DestinationOriginInterference) {
                     System.out.println(((DestinationOriginInterference) ex).getMessage());
                 }
-            }
-            else
-            {
+            } else {
                 System.out.println(ex.getMessage());
             }
-        }
-        finally {
-            System.out.println("passenger balance:"+p1.getBalance()+p1.showPassengerFlights());
-            System.out.println("passenger balance:"+p2.getBalance()+p2.showPassengerFlights());
+        } finally {
+            System.out.println("passenger balance:" + p1.getBalance() + p1.showPassengerFlights());
+            System.out.println("passenger balance:" + p2.getBalance() + p2.showPassengerFlights());
         }
 
 
